@@ -15,21 +15,21 @@ const {
 const Home = require('./home')
 const Rating = require('./rating')
 
-const server = Hapi.server({
-	port: PORT,
-	host: process.env.HOST || '0.0.0.0'
-})
-
 const KafkaProducer = new Kafka.Producer({
 	connectionString: KAFKA_CONNECTION_STRING
 })
 
 const kafka = require('./kafka')(KafkaProducer)
 
-const Start = async srv => {
+const Start = async () => {
+	const server = await new Hapi.server({
+		port: PORT,
+		host: process.env.HOST || '0.0.0.0'
+	})
+
 	const swaggerOptions = {
 		info: {
-			title: 'Rate Movies API Documentation',
+			title: 'Movies API Documentation',
 			version: '1'
 		}
 	}
@@ -43,9 +43,14 @@ const Start = async srv => {
 		}
 	])
 
-	await srv.start()
+	try {
+		await server.start()
+		chalk.info(`Server running on ${server.info.uri}`)
+	} catch (error) {
+		chalk.info(error)
+	}
 
-	chalk.info(`Server running on ${srv.info.uri}`)
+	return server
 }
 
 process.on('unhandledRejection', err => {
@@ -62,10 +67,9 @@ connect(
 	chalk
 )
 	.then(() => {
-		Start(server)
-
-		Rating(server, kafka)
-
-		Home(server)
+		Start().then(server => {
+			Rating(server, kafka)
+			Home(server)
+		})
 	})
 	.catch(startupError)

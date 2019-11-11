@@ -2,7 +2,7 @@
   "name": "node-api",
   "version": "1.0.0",
   "description": "Rate Movies API",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./src/index.js",
@@ -12,13 +12,13 @@
   "license": "ISC",
   "dependencies": {
     "@hapi/hapi": "^18.3.2",
-    "@hapi/inert": "^5.2.1",
+    "@hapi/inert": "^5.2.2",
     "@hapi/joi": "^15.1.1",
     "@hapi/joi-date": "^2.0.1",
-    "@hapi/vision": "^5.5.3",
+    "@hapi/vision": "^5.5.4",
     "chalk": "^2.4.2",
     "error-factory": "^0.1.6",
-    "hapi-swagger": "^10.0.2",
+    "hapi-swagger": "^10.3.0",
     "moment-timezone": "^0.5.27",
     "mongoose": "^5.7.7",
     "no-kafka": "^3.4.3"

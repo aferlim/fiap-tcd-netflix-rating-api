@@ -49,7 +49,7 @@ const Create = kafka => async (rating, res) => {
 }
 
 const GetAll = res => {
-	return Rating.findAll({})
+	return Rating.find({})
 		.then(data => ok(res, data))
 		.catch(err => badRequestWithMessage(res, err))
 }

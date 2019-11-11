@@ -7,11 +7,13 @@ const mongoOpts = {
 	reconnectTries: Number.MAX_VALUE,
 	reconnectInterval: 5000,
 	loggerLevel: 'info',
-	autoReconnect: true
+	autoReconnect: true,
+	useUnifiedTopology: true
 }
 
 const connectWihMongoose = async (MONGO_CONNECTION_STRING, console) => {
 	mongoose.Promise = global.Promise
+	mongoose.set('useCreateIndex', true)
 
 	mongoose.connection.on('connected', () => {
 		console.info(`🎉 mongoose connected on: ${MONGO_CONNECTION_STRING}`)
