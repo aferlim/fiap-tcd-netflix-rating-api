@@ -3,5 +3,8 @@ module.exports = {
 
 	MONGO_CONNECTION_STRING:
 		process.env.MONGO_CONNECTION_STRING ||
-		'mongodb://movie:asdf123@ds263307.mlab.com:63307/movie_netflix_tcd'
+		'mongodb://rating:asdf123@ds141188.mlab.com:41188/rating_netflix_tcd',
+
+	KAFKA_CONNECTION_STRING:
+		process.env.KAFKA_CONNECTION_STRING || 'kafka://127.0.0.1:9092'
 }

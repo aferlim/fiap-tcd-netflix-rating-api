@@ -2,23 +2,34 @@ const Hapi = require('@hapi/hapi')
 const Inert = require('@hapi/inert')
 const Vision = require('@hapi/vision')
 const HapiSwagger = require('hapi-swagger')
+var Kafka = require('no-kafka')
 
 const chalk = require('./chalk')
 const connect = require('./mongoClient')
-const { PORT, MONGO_CONNECTION_STRING } = require('./config')
+const {
+	PORT,
+	MONGO_CONNECTION_STRING,
+	KAFKA_CONNECTION_STRING
+} = require('./config')
 
 const Home = require('./home')
-const Movies = require('./movies')
+const Rating = require('./rating')
 
 const server = Hapi.server({
 	port: PORT,
 	host: process.env.HOST || '0.0.0.0'
 })
 
+const KafkaProducer = new Kafka.Producer({
+	connectionString: KAFKA_CONNECTION_STRING
+})
+
+const kafka = require('./kafka')(KafkaProducer)
+
 const Start = async srv => {
 	const swaggerOptions = {
 		info: {
-			title: 'Movies API Documentation',
+			title: 'Rate Movies API Documentation',
 			version: '1'
 		}
 	}
@@ -53,7 +64,7 @@ connect(
 	.then(() => {
 		Start(server)
 
-		Movies(server)
+		Rating(server, kafka)
 
 		Home(server)
 	})

@@ -20,7 +20,8 @@
     "error-factory": "^0.1.6",
     "hapi-swagger": "^10.0.2",
     "moment-timezone": "^0.5.27",
-    "mongoose": "^5.7.7"
+    "mongoose": "^5.7.7",
+    "no-kafka": "^3.4.3"
   },
   "devDependencies": {
     "eslint": "^6.2.2",
